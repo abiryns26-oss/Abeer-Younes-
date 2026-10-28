@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مصمم بطاقة صباح الخير | صمّم بطاقتك وشاركها</title>
+<meta name="description" content="صمّم بطاقة صباح الخير بنفسك في ثوانٍ: اكتب جملتك، أضف صورتك، اختر الخط واللون، ثم حمّل البطاقة وشاركها.">
+<meta name="theme-color" content="#c4627f">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:title" content="مصمم بطاقة صباح الخير">
+<meta property="og:description" content="اكتب جملتك، أضف صورتك، وحمّل بطاقة صباح الخير جاهزة للمشاركة.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%85%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2a2650;
+    --ink-soft: #5d5886;
+    --paper: #fdf6f0;
+    --panel: #ffffff;
+    --line: #eadfe0;
+    --sun: #f4a259;
+    --rose: #e5707e;
+    --focus: #5b4fcf;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f3eefb;
+      --ink-soft: #b9b2d6;
+      --paper: #1a1833;
+      --panel: #25224a;
+      --line: #3a3668;
+      --focus: #a99bff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Cairo", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  header { padding: 28px 20px 8px; text-align: center; }
+  header h1 {
+    font-family: "Aref Ruqaa", serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    margin: 0;
+    font-weight: 700;
+  }
+  header p { margin: 4px 0 0; color: var(--ink-soft); }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    gap: 28px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 860px) {
+    main { grid-template-columns: 380px 1fr; align-items: start; }
+    .preview { position: sticky; top: 20px; }
+  }
+
+  .controls {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px;
+    display: grid;
+    gap: 18px;
+  }
+  label, .group-title { font-weight: 600; font-size: .95rem; display: block; margin-bottom: 6px; }
+  textarea, input[type="text"] {
+    width: 100%;
+    font: inherit;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ink);
+    resize: vertical;
+  }
+  textarea:focus, input:focus, button:focus-visible, select:focus {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .file-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px;
+    border: 2px dashed var(--sun);
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+  }
+  .file-btn:hover { background: rgba(244,162,89,.12); }
+  .file-btn input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .file-btn:focus-within { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .small-link {
+    background: none; border: 0; color: var(--ink-soft); cursor: pointer;
+    font: inherit; font-size: .85rem; text-decoration: underline; padding: 6px 0 0;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    border: 1.5px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 1.05rem;
+  }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .swatches { display: flex; gap: 10px; }
+  .swatch {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 2px solid var(--line); cursor: pointer; padding: 0;
+  }
+  .swatch[aria-pressed="true"] { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  input[type="range"] { width: 100%; accent-color: var(--rose); }
+
+  .download {
+    background: linear-gradient(135deg, var(--sun), var(--rose));
+    color: #2a1a1a;
+    border: 0;
+    border-radius: 12px;
+    padding: 14px;
+    font: inherit;
+    font-weight: 800;
+    font-size: 1.05rem;
+    cursor: pointer;
+  }
+  .download:hover { filter: brightness(1.05); }
+
+  .preview { text-align: center; }
+  canvas {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(42, 38, 80, .25);
+    background: #ddd;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>بطاقة صباح الخير</h1>
+  <p>اكتب جملتك، أضف صورتك، ثم حمّل البطاقة</p>
+</header>
+
+<main>
+  <section class="controls" aria-label="خيارات البطاقة">
+    <div>
+      <label for="phrase">الجملة الرئيسية</label>
+      <textarea id="phrase" rows="3">صباح الخير، يوم جديد وبداية جميلة</textarea>
+    </div>
+
+    <div>
+      <label for="sub">اسم أو سطر إضافي (اختياري)</label>
+      <input type="text" id="sub" placeholder="مثال: من قلبي إلى قلبك">
+    </div>
+
+    <div>
+      <span class="group-title">الصورة</span>
+      <label class="file-btn">
+        <span>📷 اختيار صورة من جهازك</span>
+        <input type="file" id="imgInput" accept="image/*">
+      </label>
+      <button class="small-link" id="clearImg" type="button" hidden>إزالة الصورة</button>
+    </div>
+
+    <div>
+      <span class="group-title">نوع الخط</span>
+      <div class="chips" id="fonts">
+        <button class="chip" type="button" data-font="Aref Ruqaa" style="font-family:'Aref Ruqaa'" aria-pressed="true">رقعة</button>
+        <button class="chip" type="button" data-font="Amiri" style="font-family:'Amiri'" aria-pressed="false">نسخ</button>
+        <button class="chip" type="button" data-font="Reem Kufi" style="font-family:'Reem Kufi'" aria-pressed="false">كوفي</button>
+        <button class="chip" type="button" data-font="Cairo" style="font-family:'Cairo'" aria-pressed="false">عصري</button>
+      </div>
+    </div>
+
+    <div>
+      <span class="group-title">لون النص</span>
+      <div class="swatches" id="colors">
+        <button class="swatch" type="button" data-color="#ffffff" style="background:#ffffff" aria-label="أبيض" aria-pressed="true"></button>
+        <button class="swatch" type="button" data-color="#ffd978" style="background:#ffd978" aria-label="ذهبي" aria-pressed="false"></button>
+        <button class="swatch" type="button" data-color="#ffb3b8" style="background:#ffb3b8" aria-label="وردي" aria-pressed="false"></button>
+        <button class="swatch" type="button" data-color="#2a2650" style="background:#2a2650" aria-label="كحلي" aria-pressed="false"></button>
+      </div>
+    </div>
+
+    <div>
+      <span class="group-title">مكان النص</span>
+      <div class="chips" id="positions">
+        <button class="chip" type="button" data-pos="top" aria-pressed="false">أعلى</button>
+        <button class="chip" type="button" data-pos="middle" aria-pressed="true">وسط</button>
+        <button class="chip" type="button" data-pos="bottom" aria-pressed="false">أسفل</button>
+      </div>
+    </div>
+
+    <div>
+      <label for="size">حجم الخط</label>
+      <input type="range" id="size" min="50" max="140" value="92">
+    </div>
+
+    <div>
+      <label for="dark">تعتيم الصورة (لوضوح النص)</label>
+      <input type="range" id="dark" min="0" max="70" value="30">
+    </div>
+
+    <button class="download" id="download" type="button">تحميل البطاقة (PNG)</button>
+  </section>
+
+  <section class="preview" aria-label="معاينة البطاقة">
+    <canvas id="card" width="1080" height="1350"></canvas>
+  </section>
+</main>
+
+<script>
+  const W = 1080, H = 1350;
+  const canvas = document.getElementById('card');
+  const ctx = canvas.getContext('2d');
+
+  const state = {
+    img: null,
+    font: 'Aref Ruqaa',
+    color: '#ffffff',
+    pos: 'middle'
+  };
+
+  const $ = id => document.getElementById(id);
+
+  function drawBackground() {
+    if (state.img) {
+      const img = state.img;
+      const scale = Math.max(W / img.width, H / img.height);
+      const w = img.width * scale, h = img.height * scale;
+      ctx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
+    } else {
+      // Default dawn sky
+      const g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, '#2f2b6b');
+      g.addColorStop(0.5, '#c4627f');
+      g.addColorStop(0.8, '#f4a259');
+      g.addColorStop(1, '#ffe2a8');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+
+      // Rising sun
+      const sx = W / 2, sy = H * 0.86;
+      const glow = ctx.createRadialGradient(sx, sy, 20, sx, sy, 520);
+      glow.addColorStop(0, 'rgba(255,240,190,.95)');
+      glow.addColorStop(0.35, 'rgba(255,200,120,.45)');
+      glow.addColorStop(1, 'rgba(255,200,120,0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, W, H);
+      ctx.beginPath();
+      ctx.arc(sx, sy, 150, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff3c9';
+      ctx.fill();
+    }
+
+    const dark = $('dark').value / 100;
+    if (dark > 0) {
+      ctx.fillStyle = `rgba(15, 12, 40, ${dark})`;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  function wrapLines(text, font, maxWidth) {
+    ctx.font = font;
+    const out = [];
+    text.split('\n').forEach(par => {
+      const words = par.split(/\s+/).filter(Boolean);
+      let line = '';
+      words.forEach(word => {
+        const test = line ? line + ' ' + word : word;
+        if (ctx.measureText(test).width > maxWidth && line) {
+          out.push(line);
+          line = word;
+        } else {
+          line = test;
+        }
+      });
+      if (line) out.push(line);
+    });
+    return out;
+  }
+
+  function drawText() {
+    const phrase = $('phrase').value.trim();
+    const sub = $('sub').value.trim();
+    const size = +$('size').value;
+    const lineH = size * 1.55;
+    const subSize = Math.round(size * 0.42);
+    const maxW = W - 180;
+
+    ctx.direction = 'rtl';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const mainFont = `700 ${size}px "${state.font}", serif`;
+    const lines = phrase ? wrapLines(phrase, mainFont, maxW) : [];
+    const subFont = `400 ${subSize}px "${state.font}", serif`;
+
+    const blockH = lines.length * lineH + (sub ? subSize * 2.4 : 0);
+    let top;
+    if (state.pos === 'top') top = 140;
+    else if (state.pos === 'bottom') top = H - 140 - blockH;
+    else top = (H - blockH) / 2;
+
+    ctx.fillStyle = state.color;
+    const shadowOn = state.color !== '#2a2650';
+    ctx.shadowColor = shadowOn ? 'rgba(0,0,0,.45)' : 'transparent';
+    ctx.shadowBlur = 18;
+    ctx.shadowOffsetY = 3;
+
+    ctx.font = mainFont;
+    lines.forEach((l, i) => ctx.fillText(l, W / 2, top + lineH * i + lineH / 2));
+
+    if (sub) {
+      ctx.font = subFont;
+      ctx.globalAlpha = 0.92;
+      ctx.fillText(sub, W / 2, top + lines.length * lineH + subSize * 1.2);
+      ctx.globalAlpha = 1;
+    }
+    ctx.shadowColor = 'transparent';
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+    drawBackground();
+    drawText();
+  }
+
+  async function renderWithFont() {
+    try {
+      await Promise.all([
+        document.fonts.load(`700 60px "${state.font}"`, 'صباح الخير'),
+        document.fonts.load(`400 60px "${state.font}"`, 'صباح الخير')
+      ]);
+    } catch (e) { /* fall back to system font */ }
+    render();
+  }
+
+  // Events
+  ['phrase', 'sub', 'size', 'dark'].forEach(id => $(id).addEventListener('input', render));
+
+  $('imgInput').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      state.img = img;
+      $('clearImg').hidden = false;
+      render();
+    };
+    img.src = url;
+  });
+
+  $('clearImg').addEventListener('click', () => {
+    state.img = null;
+    $('imgInput').value = '';
+    $('clearImg').hidden = true;
+    render();
+  });
+
+  function bindGroup(containerId, attr, key) {
+    const box = $(containerId);
+    box.addEventListener('click', e => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      box.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      state[key] = btn.dataset[attr];
+      renderWithFont();
+    });
+  }
+  bindGroup('fonts', 'font', 'font');
+  bindGroup('colors', 'color', 'color');
+  bindGroup('positions', 'pos', 'pos');
+
+  $('download').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.download = 'good-morning-card.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  });
+
+  renderWithFont();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
+</script>
+</body>
+</html>
+
